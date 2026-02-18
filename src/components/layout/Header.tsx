@@ -6,9 +6,17 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { cn } from "@/lib/utils";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -20,8 +28,14 @@ export default function Header() {
   }, []);
 
   const seal = PlaceHolderImages.find((img) => img.id === "letran-seal");
-
   const isHome = pathname === "/";
+
+  const navLinks = [
+    { name: "Programs", href: "/programs" },
+    { name: "Admissions", href: "/admissions" },
+    { name: "Archive", href: "/archive" },
+    { name: "Canvas LMS", href: "/lms" },
+  ];
 
   return (
     <header
@@ -51,49 +65,76 @@ export default function Header() {
 
         <div className="flex items-center space-x-12">
           <ul className="hidden lg:flex space-x-12 text-[10px] font-bold uppercase tracking-[0.2em]">
-            <li>
-              <Link 
-                href="/programs" 
-                className={cn("hover:text-primary transition-colors", pathname === "/programs" && "text-primary")}
-              >
-                Programs
-              </Link>
-            </li>
-            <li>
-              <Link 
-                href="/admissions" 
-                className={cn("hover:text-primary transition-colors", pathname === "/admissions" && "text-primary")}
-              >
-                Admissions
-              </Link>
-            </li>
-            <li>
-              <Link 
-                href="/archive" 
-                className={cn("hover:text-primary transition-colors", pathname === "/archive" && "text-primary")}
-              >
-                Archive
-              </Link>
-            </li>
-            <li>
-              <Link 
-                href="/lms" 
-                className={cn("hover:text-primary transition-colors", pathname === "/lms" && "text-primary")}
-              >
-                Canvas LMS
-              </Link>
-            </li>
+            {navLinks.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className={cn(
+                    "hover:text-primary transition-colors",
+                    pathname === link.href && "text-primary"
+                  )}
+                >
+                  {link.name}
+                </Link>
+              </li>
+            ))}
           </ul>
-          
-          <button className="flex items-center space-x-3 group">
-            <span className="text-[9px] font-bold uppercase tracking-[0.2em] opacity-40 group-hover:opacity-100 transition-opacity">
-              Menu
-            </span>
-            <div className="flex flex-col space-y-1.5">
-              <span className="w-8 h-[2px] bg-foreground"></span>
-              <span className="w-5 h-[2px] bg-foreground self-end group-hover:w-8 transition-all"></span>
-            </div>
-          </button>
+
+          <Sheet open={isOpen} onOpenChange={setIsOpen}>
+            <SheetTrigger asChild>
+              <button className="flex items-center space-x-3 group outline-none">
+                <span className="text-[9px] font-bold uppercase tracking-[0.2em] opacity-40 group-hover:opacity-100 transition-opacity">
+                  Menu
+                </span>
+                <div className="flex flex-col space-y-1.5">
+                  <span className="w-8 h-[2px] bg-foreground"></span>
+                  <span className="w-5 h-[2px] bg-foreground self-end group-hover:w-8 transition-all"></span>
+                </div>
+              </button>
+            </SheetTrigger>
+            <SheetContent side="right" className="bg-background border-l border-border w-full sm:max-w-md p-12 flex flex-col justify-center">
+              <SheetHeader className="mb-12">
+                <SheetTitle className="cinzel text-4xl font-black tracking-tighter text-left">
+                  Navigation
+                </SheetTitle>
+              </SheetHeader>
+              <ul className="space-y-8">
+                {navLinks.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      onClick={() => setIsOpen(false)}
+                      className={cn(
+                        "text-4xl font-bold cinzel hover:text-primary transition-colors block",
+                        pathname === link.href ? "text-primary" : "text-foreground"
+                      )}
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+                <li>
+                  <Link
+                    href="/"
+                    onClick={() => setIsOpen(false)}
+                    className={cn(
+                      "text-4xl font-bold cinzel hover:text-primary transition-colors block",
+                      pathname === "/" ? "text-primary" : "text-foreground"
+                    )}
+                  >
+                    Home
+                  </Link>
+                </li>
+              </ul>
+              <div className="mt-20 pt-12 border-t border-border">
+                <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-muted-foreground mb-6">
+                  Contact Us
+                </p>
+                <p className="text-sm font-medium mb-2">Castro St. Poblacion, Manaoag</p>
+                <p className="text-sm font-medium">info@letran-manaoag.edu.ph</p>
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
       </nav>
     </header>
