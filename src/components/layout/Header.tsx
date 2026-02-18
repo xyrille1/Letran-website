@@ -3,11 +3,13 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { cn } from "@/lib/utils";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,11 +21,13 @@ export default function Header() {
 
   const seal = PlaceHolderImages.find((img) => img.id === "letran-seal");
 
+  const isHome = pathname === "/";
+
   return (
     <header
       className={cn(
         "fixed w-full z-50 transition-all duration-700",
-        scrolled
+        scrolled || !isHome
           ? "py-4 bg-background/95 backdrop-blur-md shadow-lg"
           : "py-10 bg-transparent"
       )}
@@ -48,18 +52,35 @@ export default function Header() {
         <div className="flex items-center space-x-12">
           <ul className="hidden lg:flex space-x-12 text-[10px] font-bold uppercase tracking-[0.2em]">
             <li>
-              <Link href="#events" className="hover:text-primary transition-colors">
-                Events
+              <Link 
+                href="/programs" 
+                className={cn("hover:text-primary transition-colors", pathname === "/programs" && "text-primary")}
+              >
+                Programs
               </Link>
             </li>
             <li>
-              <Link href="#vision" className="hover:text-primary transition-colors">
-                Institutional
-              </Link>
-            </li>
-            <li>
-              <Link href="#programs" className="hover:text-primary transition-colors">
+              <Link 
+                href="/admissions" 
+                className={cn("hover:text-primary transition-colors", pathname === "/admissions" && "text-primary")}
+              >
                 Admissions
+              </Link>
+            </li>
+            <li>
+              <Link 
+                href="/archive" 
+                className={cn("hover:text-primary transition-colors", pathname === "/archive" && "text-primary")}
+              >
+                Archive
+              </Link>
+            </li>
+            <li>
+              <Link 
+                href="/lms" 
+                className={cn("hover:text-primary transition-colors", pathname === "/lms" && "text-primary")}
+              >
+                Canvas LMS
               </Link>
             </li>
           </ul>
