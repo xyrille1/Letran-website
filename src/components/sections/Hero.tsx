@@ -38,16 +38,16 @@ const Hero = () => {
       className="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-12 text-center overflow-hidden selection:bg-white/30"
     >
       {/* Background Image Layer */}
-      <div 
+      <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
           backgroundImage: "url('/images/hero-bg.jpg')",
         }}
       />
-      
+
       {/* Dark Overlay for Better Text Readability */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#103667]/95 via-[#103667]/90 to-[#103667]/95" />
-      
+
       {/* LAYER 1: Dynamic Background Effects */}
       <div className="absolute inset-0 pointer-events-none">
         <div

@@ -1,9 +1,16 @@
 "use client";
 
-
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ArrowRight, GraduationCap, Search, Globe, User } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Menu,
+  X,
+  ArrowRight,
+  GraduationCap,
+  Search,
+  Globe,
+  User,
+} from "lucide-react";
 
 /**
  * Navbar Component
@@ -39,13 +46,13 @@ export default function Navbar() {
     <motion.header
       initial={false}
       animate={{ paddingTop: isScrolled ? 16 : 0 }}
-      transition={{ type: 'spring', stiffness: 120, damping: 18 }}
+      transition={{ type: "spring", stiffness: 120, damping: 18 }}
       className={`fixed top-0 left-0 right-0 z-50 px-4 md:px-6`}
-      style={{ background: 'transparent' }}
+      style={{ background: "transparent" }}
     >
       <motion.nav
         layout
-        transition={{ type: 'spring', stiffness: 120, damping: 18 }}
+        transition={{ type: "spring", stiffness: 120, damping: 18 }}
         className={`mx-auto flex items-center justify-between ${
           isScrolled
             ? "max-w-5xl bg-white/70 backdrop-blur-xl shadow-[0_10px_40px_rgba(0,0,0,0.06)] border border-white/40 px-6 py-2 rounded-full"
@@ -55,12 +62,12 @@ export default function Navbar() {
         {/* Branding Area */}
         <motion.div
           layout
-          transition={{ type: 'spring', stiffness: 180, damping: 20 }}
+          transition={{ type: "spring", stiffness: 180, damping: 20 }}
           className="flex items-center gap-3 cursor-pointer group relative z-[60]"
         >
           <motion.div
             layout
-            transition={{ type: 'spring', stiffness: 180, damping: 20 }}
+            transition={{ type: "spring", stiffness: 180, damping: 20 }}
             className={`relative flex items-center justify-center bg-blue-900 text-white rounded-full overflow-hidden shadow-lg ${
               isScrolled ? "h-9 w-9 md:h-10 md:w-10" : "h-12 w-12"
             }`}
@@ -73,9 +80,11 @@ export default function Navbar() {
           <div className="flex flex-col">
             <motion.span
               layout
-              transition={{ type: 'spring', stiffness: 180, damping: 20 }}
+              transition={{ type: "spring", stiffness: 180, damping: 20 }}
               className={`font-black tracking-tighter leading-none ${
-                isScrolled ? "text-lg text-slate-900" : "text-2xl text-slate-800"
+                isScrolled
+                  ? "text-lg text-slate-900"
+                  : "text-2xl text-slate-800"
               }`}
             >
               LETRAN
@@ -90,13 +99,17 @@ export default function Navbar() {
         <div className="hidden lg:flex items-center">
           <ul className="flex items-center gap-1 mr-4">
             {navLinks.map((link) => (
-              <motion.li key={link.name} layout transition={{ type: 'spring', stiffness: 180, damping: 20 }}>
+              <motion.li
+                key={link.name}
+                layout
+                transition={{ type: "spring", stiffness: 180, damping: 20 }}
+              >
                 <motion.a
                   href={link.href}
                   className={`px-4 py-2 text-sm font-semibold rounded-full transition-all duration-300 ${
                     activePath === link.href
-                      ? 'text-blue-600 bg-blue-50/50'
-                      : 'text-slate-600 hover:text-blue-600 hover:bg-slate-100/50'
+                      ? "text-blue-600 bg-blue-50/50"
+                      : "text-slate-600 hover:text-blue-600 hover:bg-slate-100/50"
                   }`}
                   whileHover={{ scale: 1.08 }}
                   whileTap={{ scale: 0.96 }}
@@ -107,21 +120,25 @@ export default function Navbar() {
             ))}
           </ul>
 
-          <div className={`flex items-center gap-2 ${
-            isScrolled ? "border-l border-slate-200/50 pl-4" : "pl-0"
-          }`}>
+          <div
+            className={`flex items-center gap-2 ${
+              isScrolled ? "border-l border-slate-200/50 pl-4" : "pl-0"
+            }`}
+          >
             <motion.button
-              whileHover={{ scale: 1.1, backgroundColor: '#e0e7ef' }}
+              whileHover={{ scale: 1.1, backgroundColor: "#e0e7ef" }}
               whileTap={{ scale: 0.97 }}
               className="p-2.5 text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-all"
             >
               <Search size={18} />
             </motion.button>
             <motion.button
-              whileHover={{ scale: 1.05, backgroundColor: '#1e40af' }}
+              whileHover={{ scale: 1.05, backgroundColor: "#1e40af" }}
               whileTap={{ scale: 0.97 }}
               className={`bg-blue-900 text-white font-bold uppercase tracking-wider flex items-center gap-2 hover:bg-blue-800 hover:shadow-lg hover:shadow-blue-900/20 active:scale-95 transition-all ${
-                isScrolled ? "px-5 py-2 text-[10px] rounded-full" : "px-6 py-3 text-xs rounded-xl"
+                isScrolled
+                  ? "px-5 py-2 text-[10px] rounded-full"
+                  : "px-6 py-3 text-xs rounded-xl"
               }`}
             >
               Enroll
@@ -134,7 +151,7 @@ export default function Navbar() {
         <div className="lg:hidden flex items-center gap-2">
           {!isScrolled && (
             <motion.button
-              whileHover={{ scale: 1.1, backgroundColor: '#e0e7ef' }}
+              whileHover={{ scale: 1.1, backgroundColor: "#e0e7ef" }}
               whileTap={{ scale: 0.97 }}
               className="p-2 text-slate-800"
             >
@@ -143,10 +160,12 @@ export default function Navbar() {
           )}
           <motion.button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            whileHover={{ scale: 1.1, backgroundColor: '#e0e7ef' }}
+            whileHover={{ scale: 1.1, backgroundColor: "#e0e7ef" }}
             whileTap={{ scale: 0.97 }}
             className={`relative z-[60] p-2.5 transition-all duration-300 ${
-              isScrolled ? "bg-blue-50 text-blue-900 rounded-full" : "bg-slate-100 text-slate-900 rounded-xl"
+              isScrolled
+                ? "bg-blue-50 text-blue-900 rounded-full"
+                : "bg-slate-100 text-slate-900 rounded-xl"
             }`}
           >
             {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -165,7 +184,9 @@ export default function Navbar() {
             className="fixed inset-0 bg-white/95 backdrop-blur-2xl z-[55] flex flex-col pt-32 px-10 lg:hidden"
           >
             <div className="flex flex-col gap-8">
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.4em]">Main Menu</p>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.4em]">
+                Main Menu
+              </p>
               {navLinks.map((link, i) => (
                 <motion.a
                   key={link.name}
@@ -173,7 +194,12 @@ export default function Navbar() {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
-                  transition={{ delay: i * 0.08, type: 'spring', stiffness: 180, damping: 20 }}
+                  transition={{
+                    delay: i * 0.08,
+                    type: "spring",
+                    stiffness: 180,
+                    damping: 20,
+                  }}
                   className="text-5xl font-black text-slate-900 hover:text-blue-600 transition-colors tracking-tighter"
                   whileHover={{ scale: 1.06 }}
                   whileTap={{ scale: 0.97 }}
@@ -186,7 +212,7 @@ export default function Navbar() {
             <div className="mt-auto mb-16 space-y-6">
               <motion.button
                 whileTap={{ scale: 0.98 }}
-                whileHover={{ scale: 1.04, backgroundColor: '#1e40af' }}
+                whileHover={{ scale: 1.04, backgroundColor: "#1e40af" }}
                 className="w-full bg-blue-900 text-white py-5 rounded-2xl font-bold text-xl shadow-2xl shadow-blue-900/20"
               >
                 Start Application

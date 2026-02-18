@@ -56,7 +56,7 @@ export default function IntroScreen({ onEnter }: IntroScreenProps) {
     <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black">
       <video
         ref={videoRef}
-        src="/videos/loadingLetran.mp4"
+        src="/videos/loadingLetranComp.mp4"
         className="w-full h-full object-cover"
         playsInline
         muted
