@@ -82,7 +82,7 @@ export default function Header() {
 
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
-              <button className="flex items-center space-x-3 group outline-none">
+              <button className="flex items-center space-x-3 group outline-none lg:hidden">
                 <span className="text-[9px] font-bold uppercase tracking-[0.2em] opacity-40 group-hover:opacity-100 transition-opacity">
                   Menu
                 </span>
