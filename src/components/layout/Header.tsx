@@ -40,24 +40,15 @@ export default function Header() {
   return (
     <header
       className={cn(
-        "fixed w-full z-50 transition-all duration-700",
+        "fixed w-full z-50 transition-all duration-700 animate-navbar-fade",
         scrolled || !isHome
-          ? "py-4 bg-background/95 backdrop-blur-md shadow-lg"
+          ? "py-4 bg-background/95 backdrop-blur-md shadow-lg shadow-navbar transition-shadow duration-700"
           : "py-10 bg-transparent"
       )}
     >
       <nav className="container mx-auto px-6 flex justify-between items-center">
         <Link href="/" className="flex items-center space-x-4 group">
-          {seal && (
-            <Image
-              src={seal.imageUrl}
-              alt="Logo"
-              width={40}
-              height={40}
-              className="h-10 w-10 group-hover:rotate-12 transition-transform duration-500"
-              data-ai-hint={seal.imageHint}
-            />
-          )}
+          <span className="h-10 w-10 bg-gray-300 rounded-full flex items-center justify-center font-bold text-lg text-gray-500 select-none">L</span>
           <span className="font-extrabold text-2xl tracking-tighter text-foreground">
             letran-manaoag
           </span>
@@ -70,11 +61,13 @@ export default function Header() {
                 <Link
                   href={link.href}
                   className={cn(
-                    "hover:text-primary transition-colors",
+                    "hover:text-primary transition-colors duration-300 relative group",
                     pathname === link.href && "text-primary"
                   )}
                 >
-                  {link.name}
+                  <span className="nav-link-text group-hover:underline-animation">
+                    {link.name}
+                  </span>
                 </Link>
               </li>
             ))}
