@@ -13,10 +13,13 @@ export default function CtaWidget() {
           </text>
         </svg>
       </div>
-      <button className="w-16 h-16 bg-foreground rounded-full text-background shadow-2xl flex items-center justify-center hover:scale-110 transition-transform relative border border-white/5">
+      <a
+        href="mailto:letranite@gmail.com?subject=Letran%20Inquiry"
+        className="w-16 h-16 bg-foreground rounded-full text-background shadow-2xl flex items-center justify-center hover:scale-110 transition-transform relative border border-white/5"
+      >
         <MessageSquare className="w-6 h-6 group-hover:opacity-0 transition-opacity" />
         <Headset className="w-6 h-6 absolute opacity-0 group-hover:opacity-100 transition-opacity" />
-      </button>
+      </a>
     </div>
   );
 }

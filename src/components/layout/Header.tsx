@@ -125,14 +125,16 @@ export default function Navbar() {
               isScrolled ? "border-l border-slate-200/50 pl-4" : "pl-0"
             }`}
           >
-            <motion.button
+            <motion.a
+              href="/programs"
               whileHover={{ scale: 1.1, backgroundColor: "#e0e7ef" }}
               whileTap={{ scale: 0.97 }}
               className="p-2.5 text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-all"
             >
               <Search size={18} />
-            </motion.button>
-            <motion.button
+            </motion.a>
+            <motion.a
+              href="/admissions"
               whileHover={{ scale: 1.05, backgroundColor: "#1e40af" }}
               whileTap={{ scale: 0.97 }}
               className={`bg-blue-900 text-white font-bold uppercase tracking-wider flex items-center gap-2 hover:bg-blue-800 hover:shadow-lg hover:shadow-blue-900/20 active:scale-95 transition-all ${
@@ -143,20 +145,21 @@ export default function Navbar() {
             >
               Enroll
               <ArrowRight size={14} />
-            </motion.button>
+            </motion.a>
           </div>
         </div>
 
         {/* Mobile Controls */}
         <div className="lg:hidden flex items-center gap-2">
           {!isScrolled && (
-            <motion.button
+            <motion.a
+              href="/programs"
               whileHover={{ scale: 1.1, backgroundColor: "#e0e7ef" }}
               whileTap={{ scale: 0.97 }}
               className="p-2 text-slate-800"
             >
               <Search size={22} />
-            </motion.button>
+            </motion.a>
           )}
           <motion.button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -210,13 +213,14 @@ export default function Navbar() {
             </div>
 
             <div className="mt-auto mb-16 space-y-6">
-              <motion.button
+              <motion.a
+                href="/admissions"
                 whileTap={{ scale: 0.98 }}
                 whileHover={{ scale: 1.04, backgroundColor: "#1e40af" }}
                 className="w-full bg-blue-900 text-white py-5 rounded-2xl font-bold text-xl shadow-2xl shadow-blue-900/20"
               >
                 Start Application
-              </motion.button>
+              </motion.a>
               <div className="flex justify-between items-center text-slate-400 font-medium border-t border-slate-100 pt-6">
                 <div className="flex items-center gap-2">
                   <Globe size={16} />

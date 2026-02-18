@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Clock, MapPin } from "lucide-react";
@@ -107,8 +108,11 @@ export default function Events() {
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent opacity-90"></div>
                 <div className="absolute top-10 right-10 translate-y-6 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700">
-                  <Button className="rounded-full bg-white text-black text-[10px] font-bold uppercase py-4 px-10 hover:bg-primary hover:text-white">
-                    Register
+                  <Button
+                    asChild
+                    className="rounded-full bg-white text-black text-[10px] font-bold uppercase py-4 px-10 hover:bg-primary hover:text-white"
+                  >
+                    <Link href="/admissions">Register</Link>
                   </Button>
                 </div>
                 <div className="absolute bottom-16 left-12 right-12 text-white">

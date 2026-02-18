@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Monitor, ShieldCheck, Zap, Laptop, BookOpen } from "lucide-react";
@@ -23,11 +24,24 @@ export default function LmsPage() {
             through seamless collaboration.
           </p>
           <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-            <Button size="lg" className="rounded-full bg-foreground text-background px-12 py-8 text-sm uppercase tracking-widest font-bold">
-              Student Login
+            <Button
+              asChild
+              size="lg"
+              className="rounded-full bg-foreground text-background px-12 py-8 text-sm uppercase tracking-widest font-bold"
+            >
+              <Link href="https://canvas.instructure.com/login/canvas" target="_blank" rel="noreferrer">
+                Student Login
+              </Link>
             </Button>
-            <Button variant="outline" size="lg" className="rounded-full border-foreground/10 px-12 py-8 text-sm uppercase tracking-widest font-bold">
-              Faculty Login
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="rounded-full border-foreground/10 px-12 py-8 text-sm uppercase tracking-widest font-bold"
+            >
+              <Link href="https://canvas.instructure.com/login/canvas" target="_blank" rel="noreferrer">
+                Faculty Login
+              </Link>
             </Button>
           </div>
         </div>

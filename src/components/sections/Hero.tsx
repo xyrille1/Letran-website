@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
   ArrowRight,
@@ -147,19 +148,27 @@ const Hero = () => {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-5 mb-16 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-1000">
             {/* Start Your Journey Button - Now Static */}
-            <Button className="group h-16 px-10 rounded-2xl bg-[#dc3545] hover:bg-[#bb2d3b] text-white text-base font-bold shadow-2xl shadow-black/40 transition-all duration-300 active:scale-95 flex items-center gap-2 hover:-translate-y-1">
-              Start Your Journey
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            <Button
+              asChild
+              className="group h-16 px-10 rounded-2xl bg-[#dc3545] hover:bg-[#bb2d3b] text-white text-base font-bold shadow-2xl shadow-black/40 transition-all duration-300 active:scale-95 flex items-center gap-2 hover:-translate-y-1"
+            >
+              <Link href="/admissions">
+                Start Your Journey
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
             </Button>
 
             <Button
+              asChild
               variant="outline"
               className="h-16 px-10 rounded-2xl border-2 border-[#dc3545] bg-transparent hover:bg-[#dc3545] text-white text-base font-bold transition-all duration-300 backdrop-blur-sm group shadow-lg hover:-translate-y-1"
             >
-              Inquire Now
-              <span className="ml-2 group-hover:rotate-12 transition-transform inline-block">
-                ?
-              </span>
+              <Link href="mailto:letranite@gmail.com?subject=Letran%20Admissions%20Inquiry">
+                Inquire Now
+                <span className="ml-2 group-hover:rotate-12 transition-transform inline-block">
+                  ?
+                </span>
+              </Link>
             </Button>
           </div>
 
