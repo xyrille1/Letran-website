@@ -1,0 +1,46 @@
+{
+  "placeholderImages": [
+    {
+      "id": "hero-video-bg",
+      "description": "Aerial view of a university campus",
+      "imageUrl": "https://images.unsplash.com/photo-1541339907198-e08756ebafe1?auto=format&fit=crop&w=1920&q=80",
+      "imageHint": "campus university"
+    },
+    {
+      "id": "letran-seal",
+      "description": "Letran Manaoag Seal",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/en/2/20/Letran_Manaoag_Seal.png",
+      "imageHint": "school seal"
+    },
+    {
+      "id": "event-binyag",
+      "description": "Binyag Arriba Ceremony",
+      "imageUrl": "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=800&q=80",
+      "imageHint": "university graduation"
+    },
+    {
+      "id": "event-research",
+      "description": "Research Symposium",
+      "imageUrl": "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80",
+      "imageHint": "research conference"
+    },
+    {
+      "id": "program-higher-ed",
+      "description": "Students in classroom",
+      "imageUrl": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80",
+      "imageHint": "students college"
+    },
+    {
+      "id": "program-shs",
+      "description": "Senior High School students",
+      "imageUrl": "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80",
+      "imageHint": "high school"
+    },
+    {
+      "id": "program-basic-ed",
+      "description": "Basic Education students",
+      "imageUrl": "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=800&q=80",
+      "imageHint": "elementary education"
+    }
+  ]
+}
