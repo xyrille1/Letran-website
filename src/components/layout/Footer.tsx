@@ -14,16 +14,7 @@ export default function Footer() {
         <div className="grid md:grid-cols-4 gap-20 mb-24">
           <div className="col-span-2">
             <div className="flex items-center space-x-4 mb-12">
-              {seal && (
-                <Image
-                  src={seal.imageUrl}
-                  alt="Logo"
-                  width={48}
-                  height={48}
-                  className="brightness-0 invert"
-                  data-ai-hint={seal.imageHint}
-                />
-              )}
+              <span className="h-12 w-12 bg-gray-300 rounded-full flex items-center justify-center font-bold text-2xl text-gray-500 select-none">L</span>
               <span className="font-extrabold text-4xl tracking-tighter">
                 letran-manaoag
               </span>
