@@ -27,8 +27,10 @@ type ProcedureStep = string | OnlineProcedureStep;
 
 export default function Admissions() {
   const [activeLevel, setActiveLevel] = useState<ActiveLevel>("college");
-  const [enrollmentType, setEnrollmentType] = useState<EnrollmentType>("face-to-face");
-  const [studentCategory, setStudentCategory] = useState<StudentCategory>("freshmen");
+  const [enrollmentType, setEnrollmentType] =
+    useState<EnrollmentType>("face-to-face");
+  const [studentCategory, setStudentCategory] =
+    useState<StudentCategory>("freshmen");
   const [basicEdLevel, setBasicEdLevel] = useState<BasicEdLevel>("preschool");
 
   const collegeProcedures: Record<EnrollmentType, ProcedureStep[]> = {
@@ -66,7 +68,7 @@ export default function Admissions() {
       "Form 138 (Report Card)",
       "Certificate of Good Moral Character",
       "Form 137 (Permanent Record)",
-      "Two (2) 2\"X2\" Pictures",
+      'Two (2) 2"X2" Pictures',
       "Photocopy of PSA Birth Certificate",
       "Photocopy of Marriage Contract (if married)",
       "Photocopy of Baptismal Certificate (if Catholic)",
@@ -77,7 +79,7 @@ export default function Admissions() {
       "Certificate of Good Moral Character",
       "Certified True Copy of Grades",
       "OTR (Permanent Record)",
-      "Two (2) 2\"X2\" Pictures",
+      'Two (2) 2"X2" Pictures',
       "Photocopy of PSA Birth Certificate",
       "Photocopy of Marriage Contract (if married)",
       "Photocopy of Baptismal Certificate (if Catholic)",
@@ -87,7 +89,7 @@ export default function Admissions() {
       "Certificate of Eligibility to Transfer",
       "Certificate of Good Moral Character",
       "OTR (Permanent Record)",
-      "Two (2) 2\"X2\" Pictures",
+      'Two (2) 2"X2" Pictures',
       "Photocopy of PSA Birth Certificate",
       "Photocopy of Marriage Contract (if married)",
       "Photocopy of Baptismal Certificate (if Catholic)",
@@ -126,7 +128,9 @@ export default function Admissions() {
   };
 
   const procedures =
-    activeLevel === "college" ? collegeProcedures[enrollmentType] : basicEdProcedures;
+    activeLevel === "college"
+      ? collegeProcedures[enrollmentType]
+      : basicEdProcedures;
 
   const requirements =
     activeLevel === "college"
@@ -134,7 +138,10 @@ export default function Admissions() {
       : basicRequirements[basicEdLevel];
 
   return (
-    <section id="admissions" className="min-h-screen bg-neutral-50 font-sans text-slate-900 pb-20">
+    <section
+      id="admissions"
+      className="min-h-screen bg-neutral-50 font-sans text-slate-900 pb-20"
+    >
       <header className="bg-red-900 text-white py-12 px-6 shadow-xl relative overflow-hidden">
         <div className="absolute right-0 top-0 opacity-10 pointer-events-none transform translate-x-1/4 -translate-y-1/4">
           <GraduationCap size={400} />
@@ -149,8 +156,8 @@ export default function Admissions() {
                 Admission <span className="text-yellow-400">Hub</span>
               </h1>
               <p className="text-red-100 text-lg md:text-xl max-w-2xl font-light">
-                Join the Letran legacy. Your journey to excellence starts with a simple step.
-                Select your path below to view specific procedures.
+                Join the Letran legacy. Your journey to excellence starts with a
+                simple step. Select your path below to view specific procedures.
               </p>
             </div>
             <div className="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/20">
@@ -243,11 +250,15 @@ export default function Admissions() {
                   </div>
                   <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
                     {typeof step === "string" ? (
-                      <p className="text-slate-700 leading-relaxed font-medium">{step}</p>
+                      <p className="text-slate-700 leading-relaxed font-medium">
+                        {step}
+                      </p>
                     ) : (
                       <div className="space-y-3">
                         <div className="flex items-center gap-2">
-                          <p className="text-slate-700 font-bold">{step.text}</p>
+                          <p className="text-slate-700 font-bold">
+                            {step.text}
+                          </p>
                           <a
                             href={step.link}
                             className="inline-flex items-center text-red-600 hover:underline text-sm gap-1 group/link font-bold"
@@ -312,39 +323,43 @@ export default function Admissions() {
 
               {activeLevel === "college" ? (
                 <div className="flex flex-wrap gap-2 mt-4">
-                  {(["freshmen", "transferee", "unit-earner"] as StudentCategory[]).map(
-                    (cat) => (
-                      <button
-                        key={cat}
-                        onClick={() => setStudentCategory(cat)}
-                        className={`px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${
-                          studentCategory === cat
-                            ? "bg-red-800 text-white"
-                            : "bg-slate-200 text-slate-600 hover:bg-slate-300"
-                        }`}
-                      >
-                        {cat.replace("-", " ")}
-                      </button>
-                    )
-                  )}
+                  {(
+                    [
+                      "freshmen",
+                      "transferee",
+                      "unit-earner",
+                    ] as StudentCategory[]
+                  ).map((cat) => (
+                    <button
+                      key={cat}
+                      onClick={() => setStudentCategory(cat)}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${
+                        studentCategory === cat
+                          ? "bg-red-800 text-white"
+                          : "bg-slate-200 text-slate-600 hover:bg-slate-300"
+                      }`}
+                    >
+                      {cat.replace("-", " ")}
+                    </button>
+                  ))}
                 </div>
               ) : (
                 <div className="flex flex-wrap gap-2 mt-4">
-                  {(["preschool", "elementary", "jhs", "shs"] as BasicEdLevel[]).map(
-                    (cat) => (
-                      <button
-                        key={cat}
-                        onClick={() => setBasicEdLevel(cat)}
-                        className={`px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${
-                          basicEdLevel === cat
-                            ? "bg-red-800 text-white"
-                            : "bg-slate-200 text-slate-600 hover:bg-slate-300"
-                        }`}
-                      >
-                        {cat}
-                      </button>
-                    )
-                  )}
+                  {(
+                    ["preschool", "elementary", "jhs", "shs"] as BasicEdLevel[]
+                  ).map((cat) => (
+                    <button
+                      key={cat}
+                      onClick={() => setBasicEdLevel(cat)}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${
+                        basicEdLevel === cat
+                          ? "bg-red-800 text-white"
+                          : "bg-slate-200 text-slate-600 hover:bg-slate-300"
+                      }`}
+                    >
+                      {cat}
+                    </button>
+                  ))}
                 </div>
               )}
             </div>
@@ -359,7 +374,9 @@ export default function Admissions() {
                     <div className="mt-1 w-5 h-5 rounded-md border-2 border-slate-200 flex items-center justify-center group-hover:border-red-400 transition-colors shrink-0">
                       <div className="w-2 h-2 bg-red-600 rounded-sm opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     </div>
-                    <span className="text-slate-700 text-sm font-medium">{req}</span>
+                    <span className="text-slate-700 text-sm font-medium">
+                      {req}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -369,8 +386,8 @@ export default function Admissions() {
                   Important Note
                 </p>
                 <p className="text-xs text-yellow-700 leading-relaxed italic">
-                  Please ensure all photocopies are clear and authentic. Bring original copies
-                  for verification if applying in person.
+                  Please ensure all photocopies are clear and authentic. Bring
+                  original copies for verification if applying in person.
                 </p>
               </div>
 
@@ -394,7 +411,8 @@ export default function Admissions() {
             <div className="h-px w-12 bg-slate-200"></div>
           </div>
           <p className="text-slate-500 text-sm font-medium">
-            Letran College Admission Portal • Quality Catholic Dominican Education
+            Letran College Admission Portal • Quality Catholic Dominican
+            Education
           </p>
         </div>
       </footer>
