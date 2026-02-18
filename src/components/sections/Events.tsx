@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Clock, MapPin } from "lucide-react";
@@ -44,15 +45,20 @@ export default function Events() {
               Student Life
             </span>
             <h2 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-[1] text-foreground cinzel">
-              Experience,<br />connect, Arriba
+              Experience,
+              <br />
+              connect, Arriba
             </h2>
           </div>
           <div className="text-right hidden md:block">
             <p className="text-muted-foreground text-sm max-w-xs mb-10 leading-relaxed">
-              Join a vibrant community where academic rigor meets spiritual growth and cultural celebrations.
+              Join a vibrant community where academic rigor meets spiritual
+              growth and cultural celebrations.
             </p>
             <div className="flex items-center justify-end space-x-5 group cursor-pointer">
-              <span className="text-6xl font-black tracking-tighter group-hover:text-primary transition-colors">18</span>
+              <span className="text-6xl font-black tracking-tighter group-hover:text-primary transition-colors">
+                18
+              </span>
               <div className="w-14 h-14 rounded-full border border-border flex items-center justify-center group-hover:bg-foreground group-hover:text-background transition-all">
                 <ArrowRight className="w-5 h-5 -rotate-45" />
               </div>
@@ -66,7 +72,9 @@ export default function Events() {
               <div
                 key={i}
                 className={`flex flex-col items-center shrink-0 transition-all cursor-pointer ${
-                  d.active ? "relative scale-125" : "opacity-30 hover:opacity-100 hover:scale-110"
+                  d.active
+                    ? "relative scale-125"
+                    : "opacity-30 hover:opacity-100 hover:scale-110"
                 }`}
               >
                 {d.active ? (
@@ -74,13 +82,17 @@ export default function Events() {
                     <div className="absolute -top-1 -right-1 w-2 h-2 bg-primary rounded-full animate-ping"></div>
                     <div className="w-16 h-16 bg-foreground text-background rounded-full flex flex-col items-center justify-center shadow-2xl border border-primary/20">
                       <span className="text-sm font-bold -mb-1">{d.day}</span>
-                      <span className="text-[8px] font-bold uppercase">{d.name}</span>
+                      <span className="text-[8px] font-bold uppercase">
+                        {d.name}
+                      </span>
                     </div>
                   </>
                 ) : (
                   <>
                     <span className="text-sm font-bold mb-1">{d.day}</span>
-                    <span className="text-[9px] font-bold uppercase tracking-[0.2em]">{d.name}</span>
+                    <span className="text-[9px] font-bold uppercase tracking-[0.2em]">
+                      {d.name}
+                    </span>
                   </>
                 )}
               </div>
@@ -107,8 +119,11 @@ export default function Events() {
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent opacity-90"></div>
                 <div className="absolute top-10 right-10 translate-y-6 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700">
-                  <Button className="rounded-full bg-white text-black text-[10px] font-bold uppercase py-4 px-10 hover:bg-primary hover:text-white">
-                    Register
+                  <Button
+                    asChild
+                    className="rounded-full bg-white text-black text-[10px] font-bold uppercase py-4 px-10 hover:bg-primary hover:text-white"
+                  >
+                    <Link href="/admissions">Register</Link>
                   </Button>
                 </div>
                 <div className="absolute bottom-16 left-12 right-12 text-white">
@@ -117,7 +132,8 @@ export default function Events() {
                       <Clock className="w-3 h-3 mr-2 text-primary" /> {ev.time}
                     </span>
                     <span className="flex items-center">
-                      <MapPin className="w-3 h-3 mr-2 text-primary" /> {ev.location}
+                      <MapPin className="w-3 h-3 mr-2 text-primary" />{" "}
+                      {ev.location}
                     </span>
                   </div>
                   <h4 className="text-4xl font-extrabold mb-4 group-hover:text-primary transition-colors leading-tight">
