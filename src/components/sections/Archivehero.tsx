@@ -39,7 +39,7 @@ export default function ArchiveHero() {
         transition={{ duration: 1.4, ease: [0.6, 0.05, 0.01, 0.9] }}
         className="absolute right-0 top-0 h-full w-1/2 z-0 hidden lg:block"
         style={{
-          backgroundImage: "url(/archive-bg.jpg)",
+          backgroundImage: "url(/images/programs-bg.jpg)",
           backgroundSize: "cover",
           backgroundPosition: "left center",
         }}

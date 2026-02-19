@@ -16,7 +16,7 @@ export default function Footer() {
               <img
                 src="/images/let-logo.png"
                 alt="Letran Logo"
-                className="h-16 w-16 object-contain"
+                className="h-32 w-32 object-contain"
               />
               <span className="font-extrabold text-2xl tracking-tight text-white">
                 Letran Manaoag
