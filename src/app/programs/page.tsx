@@ -146,30 +146,7 @@ export default function ProgramsPage() {
         <CampusTour />
       </motion.main>
 
-      {/* FOOTER WITH SMOOTH HOVERS */}
-      <footer className="bg-[#001233] py-4 border-t-4 border-red-700">
-        <div className="container mx-auto px-6 flex justify-between items-center text-white/60 text-[10px] tracking-widest">
-          <p>© 1620 - 2026 LETRAN OFFICIAL</p>
-          <div className="flex gap-6">
-            {["FACEBOOK", "TWITTER", "INSTAGRAM"].map((social) => (
-              <motion.span
-                key={social}
-                whileHover={{
-                  color: "#ffffff",
-                  y: -3,
-                  transition: { duration: 0.2, ease: "easeOut" },
-                }}
-                whileTap={{ scale: 0.9 }}
-                className="cursor-pointer transition-colors relative group"
-              >
-                {social}
-                {/* Underline reveal effect */}
-                <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-red-700 transition-all duration-300 group-hover:w-full" />
-              </motion.span>
-            ))}
-          </div>
-        </div>
-      </footer>
+
     </div>
   );
 }
