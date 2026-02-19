@@ -1,351 +1,251 @@
+"use client";
+
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import {
   ArrowRight,
   GraduationCap,
   CheckCircle2,
-  Sparkles,
   Globe,
-  MousePointer2,
-  Users,
+  Sparkles,
   Trophy,
-  Star,
   Plus,
+  Star,
 } from "lucide-react";
 
 const Hero = () => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const containerRef = useRef(null);
+  const { scrollY } = useScroll();
 
-  // Parallax Background Tracking
+  const textY = useTransform(scrollY, [0, 500], [0, 150]);
+  const opacityFade = useTransform(scrollY, [0, 300], [1, 0]);
+
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      const { clientX, clientY } = e;
-      const { innerWidth, innerHeight } = window;
-      const x = (clientX / innerWidth - 0.5) * 2;
-      const y = (clientY / innerHeight - 0.5) * 2;
+      const x = (e.clientX / window.innerWidth - 0.5) * 2;
+      const y = (e.clientY / window.innerHeight - 0.5) * 2;
       setMousePos({ x, y });
     };
-
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 40, filter: "blur(10px)" },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      transition: { delay: i * 0.1, duration: 0.8, ease: [0.215, 0.61, 0.355, 1] as const },
+    }),
+  };
+
+  const word = "Generation";
+  const letters = word.split("");
+
   return (
     <section
       ref={containerRef}
-      id="home"
-      className="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-12 text-center overflow-hidden selection:bg-white/30"
+      className="relative min-h-screen flex flex-col items-center justify-center pt-32 pb-20 text-center overflow-hidden bg-[#001233] selection:bg-red-700/50"
     >
-      {/* Background Image Layer */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: "url('/images/hero-bg.jpg')",
-        }}
-      />
+      {/* LAYER 1: Background & Particles */}
+      <div className="absolute inset-0 z-0">
+        <motion.div
+          initial={{ scale: 1.2, opacity: 0 }}
+          animate={{ scale: 1, opacity: 0.3 }}
+          transition={{ duration: 2.5, ease: "easeOut" }}
+          className="absolute inset-0 bg-cover bg-center grayscale"
+          style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#001233]/95 via-[#001233]/80 to-[#001233]" />
 
-      {/* Dark Overlay for Better Text Readability */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#103667]/95 via-[#103667]/90 to-[#103667]/95" />
+        <div className="absolute inset-0 pointer-events-none opacity-20">
+          {[...Array(15)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute transition-transform duration-1000 ease-out"
+              style={{
+                left: `${(i * 137) % 100}%`,
+                top: `${(i * 253) % 100}%`,
+                transform: `translate(${mousePos.x * (15 + i)}px, ${mousePos.y * (15 + i)}px)`,
+              }}
+            >
+              {i % 2 === 0 ? <Plus className="text-white w-3 h-3" /> : <Star className="text-white w-2 h-2" />}
+            </div>
+          ))}
+        </div>
 
-      {/* LAYER 1: Dynamic Background Effects */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div
-          className="absolute top-[-10%] left-[-5%] w-[700px] h-[700px] bg-white/10 rounded-full blur-[120px] animate-pulse-slow"
-          style={{
-            transform: `translate(${mousePos.x * -50}px, ${mousePos.y * -50}px)`,
-          }}
-        />
-        <div
-          className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] bg-[#dc3545]/15 rounded-full blur-[120px] animate-pulse-slow delay-700"
-          style={{
-            transform: `translate(${mousePos.x * 50}px, ${mousePos.y * 50}px)`,
-          }}
-        />
-        <div
-          className="absolute inset-0 opacity-[0.05]"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle at 2px 2px, white 1px, transparent 0)",
-            backgroundSize: "40px 40px",
-          }}
-        />
+        <motion.h2
+          style={{ y: textY, opacity: opacityFade }}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[22vw] font-black text-white/[0.02] select-none cinzel whitespace-nowrap pointer-events-none"
+        >
+          ARRIBA
+        </motion.h2>
       </div>
 
-      {/* LAYER 2: Floating Particles */}
-      <div className="absolute inset-0 pointer-events-none">
-        {[...Array(15)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute transition-transform duration-1000 ease-out"
-            style={{
-              left: `${(i * 137) % 100}%`,
-              top: `${(i * 253) % 100}%`,
-              transform: `translate(${mousePos.x * (15 + i)}px, ${mousePos.y * (15 + i)}px)`,
-              opacity: 0.12,
-            }}
-          >
-            {i % 3 === 0 ? (
-              <Plus className="text-white w-4 h-4" />
-            ) : i % 3 === 1 ? (
-              <div className="w-1.5 h-1.5 rounded-full bg-white" />
-            ) : (
-              <Star className="text-white w-3 h-3" />
-            )}
-          </div>
-        ))}
-      </div>
-
-      {/* LAYER 3: Main Content */}
+      {/* LAYER 2: Content */}
       <div className="container mx-auto px-6 relative z-10">
-        <div className="max-w-5xl mx-auto">
-          <div className="mb-8 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md shadow-2xl animate-in fade-in slide-in-from-top-4 duration-1000 relative overflow-hidden group">
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-shimmer" />
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#dc3545] opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#dc3545]"></span>
-            </span>
-            <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-white/80">
+        <motion.div initial="hidden" animate="visible" className="max-w-5xl mx-auto flex flex-col items-center">
+          
+          <motion.div
+            variants={fadeInUp}
+            custom={0}
+            className="mb-10 inline-flex items-center gap-3 px-6 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md relative overflow-hidden group"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shimmer" />
+            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-yellow-500/90">
               Admissions Open 2024-2025
             </span>
-          </div>
+          </motion.div>
 
-          <div className="mb-10 perspective-1000">
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white leading-[1.05] tracking-tight mb-6">
-              <span className="block opacity-90 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-100 hover:tracking-wider transition-all cursor-default">
-                Building the Next
-              </span>
-              <span className="relative inline-block animate-in fade-in slide-in-from-bottom-8 duration-700 delay-300 group">
-                Generation
-                <svg
-                  className="absolute -bottom-2 left-0 w-full h-3 text-[#004AAD] animate-draw duration-1000 delay-1000 fill-none filter drop-shadow-[0_2px_1px_rgba(255,255,255,0.4)]"
-                  viewBox="0 0 100 10"
-                  preserveAspectRatio="none"
+          <motion.div variants={fadeInUp} custom={1} className="mb-8">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white leading-[1.1] md:leading-[1] cinzel tracking-tighter">
+              <span className="block overflow-hidden">
+                <motion.span 
+                  initial={{ y: "100%" }} 
+                  animate={{ y: 0 }} 
+                  transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                  className="block"
                 >
-                  <path
-                    d="M0 5 Q 25 0 50 5 T 100 5"
-                    stroke="currentColor"
-                    strokeWidth="8"
-                    strokeLinecap="round"
-                  />
-                </svg>
+                  BUILDING THE NEXT
+                </motion.span>
               </span>
-              <span className="block italic font-light serif text-white/50 md:inline md:ml-4 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-500">
-                of Excellence
+              
+              <span className="relative inline-block px-2 group">
+                <span className="absolute inset-0 bg-red-600/10 blur-3xl rounded-full scale-150 animate-pulse" />
+                <span className="relative flex justify-center text-red-600 italic font-light lowercase serif">
+                  {letters.map((char, index) => (
+                    <motion.span
+                      key={index}
+                      initial={{ opacity: 0, filter: "blur(8px)", y: 20 }}
+                      animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+                      transition={{ delay: 0.8 + index * 0.04, duration: 0.5 }}
+                      whileHover={{ scale: 1.2, color: "#ffffff", filter: "drop-shadow(0 0 8px #dc2626)" }}
+                      className="inline-block transition-colors cursor-default"
+                    >
+                      {char}
+                    </motion.span>
+                  ))}
+                </span>
               </span>
+              {" "}
+              <span className="opacity-90">OF EXCELLENCE</span>
             </h1>
+          </motion.div>
 
-            <p className="max-w-2xl mx-auto text-lg md:text-xl text-white/80 leading-relaxed font-medium animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-700">
-              Join{" "}
-              <span className="text-white font-bold border-b-2 border-white/30">
-                Letran-Manaoag
-              </span>{" "}
-              to experience nearly a century of Dominican tradition blended with
-              21st-century global innovation.
-            </p>
-          </div>
+          <motion.p
+            variants={fadeInUp}
+            custom={2}
+            className="max-w-2xl mx-auto text-base md:text-xl text-zinc-400 leading-relaxed font-light mb-12"
+          >
+            Join{" "}
+            <span className="relative inline-block text-white font-semibold">
+              Letran-Manaoag
+              <motion.span 
+                initial={{ width: 0 }}
+                animate={{ width: "100%" }}
+                transition={{ delay: 1.5, duration: 1, ease: "easeInOut" }}
+                className="absolute -bottom-1 left-0 h-[2px] bg-red-600 shadow-[0_0_8px_#dc2626]"
+              />
+            </span>{" "}
+            to experience nearly a century of Dominican tradition.
+          </motion.p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-5 mb-16 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-1000">
-            {/* Start Your Journey Button - Now Static */}
+          <motion.div variants={fadeInUp} custom={3} className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-24 w-full">
             <Button
               asChild
-              className="group h-16 px-10 rounded-2xl bg-[#dc3545] hover:bg-[#bb2d3b] text-white text-base font-bold shadow-2xl shadow-black/40 transition-all duration-300 active:scale-95 flex items-center gap-2 hover:-translate-y-1"
+              className="h-16 w-full sm:w-auto px-10 rounded-xl bg-red-700 hover:bg-red-800 text-white font-bold transition-all duration-300 hover:-translate-y-2 shadow-[0_20px_40px_-15px_rgba(185,28,28,0.5)]"
             >
-              <Link href="/admissions">
-                Start Your Journey
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <Link href="/admissions" className="flex items-center gap-2 uppercase tracking-widest text-xs">
+                Start Your Journey <ArrowRight className="w-4 h-4" />
               </Link>
             </Button>
 
             <Button
               asChild
               variant="outline"
-              className="h-16 px-10 rounded-2xl border-2 border-[#dc3545] bg-transparent hover:bg-[#dc3545] text-white text-base font-bold transition-all duration-300 backdrop-blur-sm group shadow-lg hover:-translate-y-1"
+              className="h-16 w-full sm:w-auto px-10 rounded-xl border-zinc-700 bg-transparent hover:bg-white hover:text-[#001233] text-white font-bold transition-all duration-300 hover:-translate-y-2"
             >
-              <Link href="mailto:letranite@gmail.com?subject=Letran%20Admissions%20Inquiry">
+              <Link href="mailto:letranite@gmail.com" className="uppercase tracking-widest text-xs">
                 Inquire Now
-                <span className="ml-2 group-hover:rotate-12 transition-transform inline-block">
-                  ?
-                </span>
               </Link>
             </Button>
-          </div>
+          </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl">
             {[
-              {
-                icon: <GraduationCap />,
-                label: "Dominican Excellence",
-                sub: "95+ Years of Legacy",
-                delay: "delay-[1200ms]",
-              },
-              {
-                icon: <Globe />,
-                label: "Global Curriculum",
-                sub: "World-Class Standards",
-                delay: "delay-[1400ms]",
-              },
-              {
-                icon: <CheckCircle2 />,
-                label: "Values-Oriented",
-                sub: "Character Building First",
-                delay: "delay-[1600ms]",
-              },
+              { icon: <GraduationCap />, title: "Dominican Excellence", sub: "95+ Years of Legacy", custom: 4 },
+              { icon: <Globe />, title: "Global Curriculum", sub: "World-Class Standards", custom: 5 },
+              { icon: <CheckCircle2 />, title: "Values-Oriented", sub: "Character Building First", custom: 6 },
             ].map((item, i) => (
-              <div
+              <motion.div
                 key={i}
-                className={`group relative p-8 bg-white/10 backdrop-blur-md rounded-[2rem] border border-white/10 shadow-2xl transition-all duration-500 hover:-translate-y-4 hover:bg-white/15 animate-in fade-in slide-in-from-bottom-8 fill-mode-both ${item.delay}`}
+                variants={fadeInUp}
+                custom={item.custom}
+                whileHover={{ y: -10, backgroundColor: "rgba(255,255,255,0.08)", borderColor: "rgba(220, 38, 38, 0.3)" }}
+                className="p-8 bg-white/5 backdrop-blur-sm border border-white/10 rounded-[2rem] transition-all duration-500"
               >
-                <div className="w-14 h-14 rounded-2xl mb-4 flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 bg-white/10 text-white">
-                  {React.cloneElement(item.icon, { className: "w-7 h-7" })}
+                <div className="text-yellow-500 mb-4 flex justify-center">
+                  {React.cloneElement(item.icon as React.ReactElement, { size: 28, strokeWidth: 1.5 } as any)}
                 </div>
-                <h3 className="font-bold text-white text-sm uppercase tracking-wider relative z-10">
-                  {item.label}
-                </h3>
-                <p className="text-xs text-white/50 mt-1 relative z-10">
-                  {item.sub}
-                </p>
-              </div>
+                <h3 className="font-bold text-white text-[11px] uppercase tracking-[0.2em] mb-2">{item.title}</h3>
+                <p className="text-[9px] text-zinc-500 uppercase tracking-widest">{item.sub}</p>
+              </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
 
-      <div
-        className="hidden lg:block absolute top-1/4 left-12 p-4 bg-white/5 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/10 animate-float"
-        style={{
-          transform: `translate(${mousePos.x * -20}px, ${mousePos.y * -20}px)`,
-        }}
+      {/* Floating Info Cards */}
+      <motion.div
+        animate={{ y: [0, -15, 0], x: mousePos.x * 20 }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        className="hidden lg:flex absolute top-1/4 left-12 p-4 bg-white/5 backdrop-blur-xl border border-white/10 gap-4 items-center rounded-2xl shadow-2xl"
       >
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
-            <Sparkles className="w-5 h-5 text-white animate-spin-slow" />
-          </div>
-          <div className="text-left">
-            <p className="text-[10px] font-bold text-white/40 uppercase">
-              Top Rating
-            </p>
-            <p className="text-sm font-bold text-white">Quality Education</p>
-          </div>
+        <Sparkles className="text-yellow-500 w-4 h-4 animate-pulse" />
+        <div className="text-left">
+          <p className="text-[8px] font-black text-white/40 uppercase">Accreditation</p>
+          <p className="text-[10px] font-bold text-white uppercase">PAASCU Level III</p>
         </div>
-      </div>
+      </motion.div>
 
-      <div
-        className="hidden lg:block absolute bottom-1/4 right-12 p-4 bg-white/5 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/10 animate-float-delayed"
-        style={{
-          transform: `translate(${mousePos.x * 30}px, ${mousePos.y * 30}px)`,
-        }}
+      <motion.div
+        animate={{ y: [0, 15, 0], x: mousePos.x * -20 }}
+        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+        className="hidden lg:flex absolute bottom-1/3 right-12 p-4 bg-white/5 backdrop-blur-xl border border-white/10 gap-4 items-center rounded-2xl shadow-2xl"
       >
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
-            <Trophy className="w-5 h-5 text-white" />
-          </div>
-          <div className="text-left">
-            <p className="text-[10px] font-bold text-white/40 uppercase">
-              Excellence
-            </p>
-            <p className="text-sm font-bold text-white">PAASCU Accredited</p>
-          </div>
+        <Trophy className="text-yellow-500 w-4 h-4" />
+        <div className="text-left">
+          <p className="text-[8px] font-black text-white/40 uppercase">Top Rating</p>
+          <p className="text-[10px] font-bold text-white uppercase">Quality Education</p>
+        </div>
+      </motion.div>
+
+      {/* Scroll Indicator */}
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 opacity-40">
+        <span className="text-[9px] font-black text-white uppercase tracking-[0.4em]">Explore</span>
+        <div className="w-[1px] h-12 bg-white/10 relative overflow-hidden rounded-full">
+          <motion.div
+            animate={{ y: [-48, 48] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+            className="absolute top-0 left-0 w-full h-1/2 bg-red-600"
+          />
         </div>
       </div>
 
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 animate-in fade-in duration-1000 delay-[2000ms] cursor-pointer group">
-        <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] text-white/40 group-hover:text-white transition-colors">
-          <MousePointer2 className="w-3 h-3 group-hover:rotate-45 transition-transform" />
-          <span>Explore</span>
-        </div>
-        <div className="h-12 w-[2px] bg-white/10 relative overflow-hidden rounded-full">
-          <div className="absolute top-0 left-0 w-full h-1/2 bg-[#dc3545] animate-scroll"></div>
-        </div>
-      </div>
-
-      <style jsx>{`
-        @keyframes scroll {
-          0% {
-            transform: translateY(-100%);
-          }
-          100% {
-            transform: translateY(200%);
-          }
-        }
-        @keyframes draw {
-          from {
-            stroke-dasharray: 0 100;
-          }
-          to {
-            stroke-dasharray: 100 100;
-          }
-        }
-        @keyframes float {
-          0%,
-          100% {
-            transform: translateY(0px) rotate(0deg);
-          }
-          50% {
-            transform: translateY(-20px) rotate(2deg);
-          }
-        }
-        @keyframes float-delayed {
-          0%,
-          100% {
-            transform: translateY(0px) rotate(0deg);
-          }
-          50% {
-            transform: translateY(-15px) rotate(-2deg);
-          }
-        }
-        @keyframes pulse-slow {
-          0%,
-          100% {
-            opacity: 0.1;
-            transform: scale(1);
-          }
-          50% {
-            opacity: 0.2;
-            transform: scale(1.1);
-          }
-        }
+      <style jsx global>{`
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&display=swap');
+        .cinzel { font-family: 'Cinzel', serif; }
+        .serif { font-family: 'Cinzel', serif; }
+        
         @keyframes shimmer {
-          100% {
-            transform: translateX(100%);
-          }
-        }
-        @keyframes spin-slow {
-          from {
-            transform: rotate(0deg);
-          }
-          to {
-            transform: rotate(360deg);
-          }
-        }
-        .animate-scroll {
-          animation: scroll 2.5s cubic-bezier(0.15, 0.41, 0.69, 0.94) infinite;
-        }
-        .animate-draw {
-          animation: draw 1.8s ease-out forwards;
-        }
-        .animate-float {
-          animation: float 6s ease-in-out infinite;
-        }
-        .animate-float-delayed {
-          animation: float-delayed 8s ease-in-out infinite;
-          animation-delay: 1.5s;
-        }
-        .animate-pulse-slow {
-          animation: pulse-slow 10s ease-in-out infinite;
+          100% { transform: translateX(100%); }
         }
         .animate-shimmer {
-          animation: shimmer 2s infinite;
-        }
-        .animate-spin-slow {
-          animation: spin-slow 12s linear infinite;
-        }
-        .perspective-1000 {
-          perspective: 1000px;
-        }
-        .serif {
-          font-family: "Cinzel", serif;
+          animation: shimmer 2.5s infinite;
         }
       `}</style>
     </section>
