@@ -1,16 +1,21 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Menu,
   X,
   ArrowRight,
-  GraduationCap,
   Search,
   Globe,
   User,
+  FileText,
+  GraduationCap,
+  Phone,
+  BookOpen,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { searchContent, SearchResult } from "@/lib/search-data";
 
 /**
  * Navbar Component
@@ -22,16 +27,75 @@ import {
  */
 
 const navLinks = [
+  { name: "Home", href: "/" },
   { name: "Programs", href: "/programs" },
   { name: "Admissions", href: "/admissions" },
   { name: "Archive", href: "/archive" },
-  { name: "Canvas LMS", href: "/lms" },
+  { name: "Canvas LMS", href: "https://dpp.instructure.com/login/canvas" },
 ];
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activePath, setActivePath] = useState("/");
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
+
+  // Live search results
+  const searchResults = useMemo(
+    () => searchContent(searchQuery),
+    [searchQuery],
+  );
+
+  const getCategoryIcon = (category: SearchResult["category"]) => {
+    switch (category) {
+      case "program":
+        return <GraduationCap size={16} className="text-blue-500" />;
+      case "admissions":
+        return <FileText size={16} className="text-green-500" />;
+      case "requirement":
+        return <BookOpen size={16} className="text-orange-500" />;
+      case "contact":
+        return <Phone size={16} className="text-purple-500" />;
+      default:
+        return <ArrowRight size={16} className="text-slate-400" />;
+    }
+  };
+
+  const handleResultClick = (href: string) => {
+    handleSearchClose();
+    if (href.startsWith("http")) {
+      window.open(href, "_blank");
+    } else {
+      router.push(href);
+    }
+  };
+
+  const handleSearchOpen = () => {
+    setSearchOpen(true);
+    setMobileMenuOpen(false);
+  };
+
+  const handleSearchClose = () => {
+    setSearchOpen(false);
+    setSearchQuery("");
+  };
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      handleSearchClose();
+    }
+  };
+
+  useEffect(() => {
+    if (searchOpen && searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  }, [searchOpen]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -63,21 +127,26 @@ export default function Navbar() {
         <motion.div
           layout
           transition={{ type: "spring", stiffness: 180, damping: 20 }}
-          className="flex items-center gap-3 cursor-pointer group relative z-[60]"
+          className="flex items-center gap-1 cursor-pointer group relative z-[60]"
         >
           <motion.div
             layout
             transition={{ type: "spring", stiffness: 180, damping: 20 }}
-            className={`relative flex items-center justify-center bg-blue-900 text-white rounded-full overflow-hidden shadow-lg ${
-              isScrolled ? "h-9 w-9 md:h-10 md:w-10" : "h-12 w-12"
+            className={`relative overflow-hidden ${
+              isScrolled
+                ? "h-[120px] w-[120px] md:h-24 md:w-24"
+                : "h-[120px] w-[120px] md:h-32 md:w-32"
             }`}
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.96 }}
           >
-            <GraduationCap size={isScrolled ? 18 : 24} />
-            <div className="absolute inset-0 bg-gradient-to-tr from-blue-400/20 to-transparent" />
+            <img
+              src="/images/let-logo.png"
+              alt="Letran Logo"
+              className="w-full h-full object-contain"
+            />
           </motion.div>
-          <div className="flex flex-col">
+          <div className="flex flex-col -ml-8">
             <motion.span
               layout
               transition={{ type: "spring", stiffness: 180, damping: 20 }}
@@ -109,7 +178,9 @@ export default function Navbar() {
                   className={`px-4 py-2 text-sm font-semibold rounded-full transition-all duration-300 ${
                     activePath === link.href
                       ? "text-blue-600 bg-blue-50/50"
-                      : "text-slate-600 hover:text-blue-600 hover:bg-slate-100/50"
+                      : isScrolled
+                        ? "text-slate-700 hover:text-blue-600 hover:bg-slate-100/50"
+                        : "text-slate-400 hover:text-blue-600 hover:bg-slate-100/50"
                   }`}
                   whileHover={{ scale: 1.08 }}
                   whileTap={{ scale: 0.96 }}
@@ -125,14 +196,14 @@ export default function Navbar() {
               isScrolled ? "border-l border-slate-200/50 pl-4" : "pl-0"
             }`}
           >
-            <motion.a
-              href="/programs"
+            <motion.button
+              onClick={handleSearchOpen}
               whileHover={{ scale: 1.1, backgroundColor: "#e0e7ef" }}
               whileTap={{ scale: 0.97 }}
               className="p-2.5 text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-all"
             >
               <Search size={18} />
-            </motion.a>
+            </motion.button>
             <motion.a
               href="/admissions"
               whileHover={{ scale: 1.05, backgroundColor: "#1e40af" }}
@@ -152,14 +223,14 @@ export default function Navbar() {
         {/* Mobile Controls */}
         <div className="lg:hidden flex items-center gap-2">
           {!isScrolled && (
-            <motion.a
-              href="/programs"
+            <motion.button
+              onClick={handleSearchOpen}
               whileHover={{ scale: 1.1, backgroundColor: "#e0e7ef" }}
               whileTap={{ scale: 0.97 }}
               className="p-2 text-slate-800"
             >
               <Search size={22} />
-            </motion.a>
+            </motion.button>
           )}
           <motion.button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -232,6 +303,124 @@ export default function Navbar() {
                 </div>
               </div>
             </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Search Modal Overlay */}
+      <AnimatePresence>
+        {searchOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[70] flex items-start justify-center pt-20 md:pt-32"
+            onClick={handleSearchClose}
+          >
+            <motion.div
+              initial={{ opacity: 0, y: -20, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -20, scale: 0.95 }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="w-full max-w-2xl mx-4 bg-white rounded-2xl shadow-2xl overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <form onSubmit={handleSearchSubmit} className="relative">
+                <Search
+                  className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400"
+                  size={24}
+                />
+                <input
+                  ref={searchInputRef}
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search programs, admissions, events..."
+                  className="w-full py-5 pl-14 pr-20 text-lg text-slate-900 placeholder:text-slate-400 focus:outline-none"
+                />
+                <button
+                  type="button"
+                  onClick={handleSearchClose}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-all"
+                >
+                  <X size={20} />
+                </button>
+              </form>
+
+              {/* Live Search Results */}
+              {searchQuery.trim() && (
+                <div className="border-t border-slate-100 max-h-80 overflow-y-auto">
+                  {searchResults.length > 0 ? (
+                    <div className="py-2">
+                      {searchResults.map((result, index) => (
+                        <motion.button
+                          key={result.id}
+                          initial={{ opacity: 0, y: -5 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: index * 0.03 }}
+                          onClick={() => handleResultClick(result.href)}
+                          className="w-full px-5 py-3 flex items-start gap-3 hover:bg-slate-50 transition-colors text-left"
+                        >
+                          <div className="mt-0.5">
+                            {getCategoryIcon(result.category)}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="font-semibold text-slate-900 truncate">
+                              {result.title}
+                            </p>
+                            <p className="text-sm text-slate-500 line-clamp-1">
+                              {result.description}
+                            </p>
+                          </div>
+                          <span className="text-[10px] font-medium text-slate-400 uppercase tracking-wider bg-slate-100 px-2 py-1 rounded-full">
+                            {result.category}
+                          </span>
+                        </motion.button>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="px-5 py-8 text-center">
+                      <p className="text-slate-500">
+                        No results found for "{searchQuery}"
+                      </p>
+                      <p className="text-sm text-slate-400 mt-1">
+                        Try searching for programs, admissions, or requirements
+                      </p>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Quick Links - only show when no search query */}
+              {!searchQuery.trim() && (
+                <div className="border-t border-slate-100 px-5 py-4">
+                  <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">
+                    Quick Links
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {[
+                      "Programs",
+                      "Admissions",
+                      "Scholarships",
+                      "Canvas LMS",
+                      "Contact",
+                    ].map((item) => (
+                      <button
+                        key={item}
+                        onClick={() => {
+                          setSearchQuery(item);
+                          searchInputRef.current?.focus();
+                        }}
+                        className="px-3 py-1.5 text-sm text-slate-600 bg-slate-100 hover:bg-blue-100 hover:text-blue-600 rounded-full transition-all"
+                      >
+                        {item}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
