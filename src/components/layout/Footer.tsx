@@ -13,10 +13,14 @@ export default function Footer() {
       <div className="container mx-auto px-6">
         <div className="grid md:grid-cols-4 gap-20 mb-24">
           <div className="col-span-2">
-            <div className="flex items-center space-x-4 mb-12">
-              <span className="h-12 w-12 bg-gray-300 rounded-full flex items-center justify-center font-bold text-2xl text-gray-500 select-none">L</span>
-              <span className="font-extrabold text-4xl tracking-tighter">
-                letran-manaoag
+            <div className="flex items-center -space-x-12 mb-12">
+              <img
+                src="/images/let-logo.png"
+                alt="Letran Logo"
+                className="h-44 w-44 object-contain"
+              />
+              <span className="-ml-100 font-extrabold text-4xl tracking-tighter">
+                Letran-manaoag
               </span>
             </div>
             <p className="text-muted-foreground max-w-sm mb-12 leading-relaxed font-medium text-lg">
@@ -25,7 +29,11 @@ export default function Footer() {
             </p>
             <div className="flex space-x-8">
               {[Facebook, Instagram, Linkedin].map((Icon, i) => (
-                <Link key={i} href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                <Link
+                  key={i}
+                  href="#"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
                   <Icon className="w-6 h-6" />
                 </Link>
               ))}
@@ -37,9 +45,30 @@ export default function Footer() {
               Resources
             </h4>
             <ul className="space-y-6 text-sm text-muted-foreground font-bold uppercase tracking-widest">
-              <li><Link href="#" className="hover:text-background transition-colors">SMS Portal</Link></li>
-              <li><Link href="#" className="hover:text-background transition-colors">Canvas LMS</Link></li>
-              <li><Link href="#" className="hover:text-background transition-colors">Digital Library</Link></li>
+              <li>
+                <Link
+                  href="#"
+                  className="hover:text-background transition-colors"
+                >
+                  SMS Portal
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="#"
+                  className="hover:text-background transition-colors"
+                >
+                  Canvas LMS
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="#"
+                  className="hover:text-background transition-colors"
+                >
+                  Digital Library
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -48,7 +77,11 @@ export default function Footer() {
               Contact
             </h4>
             <ul className="space-y-6 text-sm text-muted-foreground font-medium">
-              <li className="leading-relaxed">Castro St. Poblacion,<br />Manaoag, Pangasinan</li>
+              <li className="leading-relaxed">
+                Castro St. Poblacion,
+                <br />
+                Manaoag, Pangasinan
+              </li>
               <li>info@letran-manaoag.edu.ph</li>
               <li>+63 (075) 529 1234</li>
             </ul>
@@ -56,10 +89,14 @@ export default function Footer() {
         </div>
 
         <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-[9px] text-muted-foreground/50 font-bold uppercase tracking-[0.3em]">
-          <p>© 2024 Colegio de San Juan de Letran - Manaoag. Arriba!</p>
+          <p>©2026 Colegio de San Juan de Letran - Manaoag. Arriba!</p>
           <div className="flex space-x-10 mt-8 md:mt-0">
-            <Link href="#" className="hover:text-background">Privacy Policy</Link>
-            <Link href="#" className="hover:text-background">Terms of Service</Link>
+            <Link href="#" className="hover:text-background">
+              Privacy Policy
+            </Link>
+            <Link href="#" className="hover:text-background">
+              Terms of Service
+            </Link>
           </div>
         </div>
       </div>

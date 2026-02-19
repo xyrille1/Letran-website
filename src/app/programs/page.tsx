@@ -7,12 +7,12 @@ import CampusTour from "@/components/sections/CampusTour";
 // Animation Variants for orchestration
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
-  visible: { 
-    opacity: 1, 
-    y: 0, 
-    transition: { duration: 0.8, ease: [0.33, 1, 0.68, 1] } 
-  }
-};
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, ease: [0.33, 1, 0.68, 1] as const },
+  },
+} as const;
 
 const staggerContainer = {
   hidden: { opacity: 0 },
@@ -20,33 +20,37 @@ const staggerContainer = {
     opacity: 1,
     transition: {
       staggerChildren: 0.2,
-      delayChildren: 0.3
-    }
-  }
-};
+      delayChildren: 0.3,
+    },
+  },
+} as const;
 
 export default function ProgramsPage() {
   return (
     <div className="bg-white selection:bg-red-800 selection:text-white overflow-x-hidden">
-      
       {/* HERO SECTION */}
       <section className="relative min-h-[85vh] flex items-center overflow-hidden bg-white pt-20">
-        
         {/* ANIMATED CLIP-PATH IMAGE */}
-        <motion.div 
-          initial={{ clipPath: 'polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%)', opacity: 0 }}
-          animate={{ clipPath: 'polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%)', opacity: 1 }}
+        <motion.div
+          initial={{
+            clipPath: "polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%)",
+            opacity: 0,
+          }}
+          animate={{
+            clipPath: "polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%)",
+            opacity: 1,
+          }}
           transition={{ duration: 1.4, ease: [0.6, 0.05, 0.01, 0.9] }}
           className="absolute right-0 top-0 h-full w-1/2 z-0 hidden lg:block"
           style={{
-            backgroundImage: 'url(/programs-bg.jpg)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'left center',
+            backgroundImage: "url(/programs-bg.jpg)",
+            backgroundSize: "cover",
+            backgroundPosition: "left center",
           }}
         />
-        
+
         {/* WATERMARK ANIMATION */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, x: -100 }}
           animate={{ opacity: 0.03, x: 0 }}
           transition={{ duration: 1.5, ease: "easeOut" }}
@@ -55,7 +59,7 @@ export default function ProgramsPage() {
           <h2 className="text-[20vw] font-black cinzel">1620</h2>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           variants={staggerContainer}
           initial="hidden"
           animate="visible"
@@ -63,8 +67,11 @@ export default function ProgramsPage() {
         >
           <div className="max-w-2xl">
             {/* Top Line & Text */}
-            <motion.div variants={fadeInUp} className="flex items-center gap-4 mb-8">
-              <motion.div 
+            <motion.div
+              variants={fadeInUp}
+              className="flex items-center gap-4 mb-8"
+            >
+              <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: 48 }}
                 transition={{ delay: 0.8, duration: 0.8 }}
@@ -76,28 +83,34 @@ export default function ProgramsPage() {
             </motion.div>
 
             {/* Title with Split Effect */}
-            <motion.h1 variants={fadeInUp} className="text-5xl md:text-7xl font-black cinzel text-[#001233] leading-tight mb-6">
+            <motion.h1
+              variants={fadeInUp}
+              className="text-5xl md:text-7xl font-black cinzel text-[#001233] leading-tight mb-6"
+            >
               LETRAN'S <br />
               <span className="text-red-700">ACADEMIC PATHWAY</span>
             </motion.h1>
 
             {/* Description with border-draw animation */}
             <motion.div variants={fadeInUp} className="relative">
-               <motion.p 
+              <motion.p
                 className="text-zinc-600 text-lg md:text-xl leading-relaxed mb-10 border-l-4 border-red-700 pl-6"
                 initial={{ borderLeftWidth: 0 }}
                 animate={{ borderLeftWidth: 4 }}
                 transition={{ delay: 1.2, duration: 0.5 }}
               >
-                In a historic move towards specialized excellence, Letran officially 
-                transitions to a <span className="text-red-700 font-semibold italic">renewable curriculum</span> through Dominican truth 
-                and global innovation.
+                In a historic move towards specialized excellence, Letran
+                officially transitions to a{" "}
+                <span className="text-red-700 font-semibold italic">
+                  renewable curriculum
+                </span>{" "}
+                through Dominican truth and global innovation.
               </motion.p>
             </motion.div>
 
             {/* INTERACTIVE CTA */}
             <motion.div variants={fadeInUp} className="flex items-center gap-6">
-              <motion.span 
+              <motion.span
                 whileHover={{ scale: 1.1, color: "#991b1b" }}
                 whileTap={{ scale: 0.95 }}
                 className="text-red-700 font-bold italic tracking-widest cursor-pointer select-none"
@@ -110,7 +123,7 @@ export default function ProgramsPage() {
       </section>
 
       {/* STRIP ANIMATION */}
-      <motion.div 
+      <motion.div
         initial={{ scaleX: 0 }}
         animate={{ scaleX: 1 }}
         transition={{ delay: 1.5, duration: 0.8, ease: "circOut" }}
@@ -122,7 +135,7 @@ export default function ProgramsPage() {
       </motion.div>
 
       {/* MAIN CONTENT */}
-      <motion.main 
+      <motion.main
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true, margin: "-100px" }}
@@ -139,12 +152,12 @@ export default function ProgramsPage() {
           <p>© 1620 - 2026 LETRAN OFFICIAL</p>
           <div className="flex gap-6">
             {["FACEBOOK", "TWITTER", "INSTAGRAM"].map((social) => (
-              <motion.span 
+              <motion.span
                 key={social}
-                whileHover={{ 
-                  color: "#ffffff", 
-                  y: -3, 
-                  transition: { duration: 0.2, ease: "easeOut" } 
+                whileHover={{
+                  color: "#ffffff",
+                  y: -3,
+                  transition: { duration: 0.2, ease: "easeOut" },
                 }}
                 whileTap={{ scale: 0.9 }}
                 className="cursor-pointer transition-colors relative group"
