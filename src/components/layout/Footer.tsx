@@ -6,49 +6,41 @@ import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { Facebook, Instagram, Linkedin } from "lucide-react";
 
 export default function Footer() {
-  const seal = PlaceHolderImages.find((img) => img.id === "letran-seal");
-
   return (
-    <footer className="bg-foreground text-background py-32">
-      <div className="container mx-auto px-6">
-        <div className="grid md:grid-cols-4 gap-20 mb-24">
-          <div className="col-span-2">
-            <div className="flex items-center -space-x-12 mb-12">
+    <footer className="text-background" style={{ backgroundColor: '#001233' }}>
+      <div className="container mx-auto px-6 py-16">
+        <div className="grid md:grid-cols-3 lg:grid-cols-5 gap-12 mb-16">
+          {/* Branding Section */}
+          <div className="md:col-span-3 lg:col-span-2">
+            <div className="flex items-center gap-4 mb-6">
               <img
                 src="/images/let-logo.png"
                 alt="Letran Logo"
-                className="h-44 w-44 object-contain"
+                className="h-32 w-32 object-contain"
               />
-              <span className="-ml-100 font-extrabold text-4xl tracking-tighter">
-                Letran-manaoag
+              <span className="font-extrabold text-2xl tracking-tight text-white">
+                Letran Manaoag
               </span>
             </div>
-            <p className="text-muted-foreground max-w-sm mb-12 leading-relaxed font-medium text-lg">
+            <p className="text-white/60 max-w-xs leading-relaxed text-sm">
               Building a legacy of truth and excellence through life-changing
               Catholic education since 1620.
             </p>
-            <div className="flex space-x-8">
-              {[Facebook, Instagram, Linkedin].map((Icon, i) => (
-                <Link
-                  key={i}
-                  href="#"
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
-                  <Icon className="w-6 h-6" />
-                </Link>
-              ))}
-            </div>
           </div>
 
+          {/* Spacer for layout */}
+          <div className="hidden lg:block"></div>
+
+          {/* Resources Links */}
           <div>
-            <h4 className="text-[11px] font-bold uppercase tracking-[0.5em] text-primary mb-10">
+            <h4 className="text-xs font-bold uppercase tracking-widest text-white/40 mb-6">
               Resources
             </h4>
-            <ul className="space-y-6 text-sm text-muted-foreground font-bold uppercase tracking-widest">
+            <ul className="space-y-4 text-sm text-white/80 font-medium">
               <li>
                 <Link
                   href="#"
-                  className="hover:text-background transition-colors"
+                  className="hover:text-white transition-colors duration-300"
                 >
                   SMS Portal
                 </Link>
@@ -56,7 +48,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="#"
-                  className="hover:text-background transition-colors"
+                  className="hover:text-white transition-colors duration-300"
                 >
                   Canvas LMS
                 </Link>
@@ -64,7 +56,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="#"
-                  className="hover:text-background transition-colors"
+                  className="hover:text-white transition-colors duration-300"
                 >
                   Digital Library
                 </Link>
@@ -72,11 +64,12 @@ export default function Footer() {
             </ul>
           </div>
 
+          {/* Contact Info */}
           <div>
-            <h4 className="text-[11px] font-bold uppercase tracking-[0.5em] text-primary mb-10">
+            <h4 className="text-xs font-bold uppercase tracking-widest text-white/40 mb-6">
               Contact
             </h4>
-            <ul className="space-y-6 text-sm text-muted-foreground font-medium">
+            <ul className="space-y-4 text-sm text-white/80 font-light">
               <li className="leading-relaxed">
                 Castro St. Poblacion,
                 <br />
@@ -88,15 +81,33 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-[9px] text-muted-foreground/50 font-bold uppercase tracking-[0.3em]">
-          <p>©2026 Colegio de San Juan de Letran - Manaoag. Arriba!</p>
-          <div className="flex space-x-10 mt-8 md:mt-0">
-            <Link href="#" className="hover:text-background">
-              Privacy Policy
-            </Link>
-            <Link href="#" className="hover:text-background">
-              Terms of Service
-            </Link>
+        {/* Bottom Bar */}
+        <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center text-xs text-white/40">
+          <p className="mb-4 sm:mb-0">
+            ©{new Date().getFullYear()} Colegio de San Juan de Letran - Manaoag
+          </p>
+          <div className="flex items-center space-x-6">
+            {/* Social Links */}
+            <div className="flex space-x-4">
+              {[Facebook, Instagram, Linkedin].map((Icon, i) => (
+                <Link
+                  key={i}
+                  href="#"
+                  className="text-white/60 hover:text-white transition-colors duration-300"
+                >
+                  <Icon className="w-5 h-5" />
+                </Link>
+              ))}
+            </div>
+            {/* Policy Links */}
+            <div className="flex space-x-6 text-white/60">
+              <Link href="#" className="hover:text-white transition-colors duration-300">
+                Privacy
+              </Link>
+              <Link href="#" className="hover:text-white transition-colors duration-300">
+                Terms
+              </Link>
+            </div>
           </div>
         </div>
       </div>
